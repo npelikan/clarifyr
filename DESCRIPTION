@@ -2,8 +2,11 @@ Package: clarifyr
 Version: 0.0.0.9000
 Title: Find, Download and Parse Clarity XML Election Returns Data
 Description: This package finds and extracts data in a useful, 'tidy' format from Clarity sites.
-Authors@R: person("Nick", "Pelikan", "nick.pelikan@gmail.com", c("aut", "cre"))
+Authors@R: person("Nick", "Pelikan", email="nick.pelikan@gmail.com", role=c("aut", "cre"))
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
+Suggests: 
+    testthat
+RoxygenNote: 6.0.1
