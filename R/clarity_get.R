@@ -19,7 +19,7 @@ url_split <- function(x){
 #' @importFrom stringr str_detect str_split
 #' @importFrom httr GET content
 #' @importFrom curl curl_fetch_disk
-#' @importFrom xml read_xml
+#' @importFrom xml read_xml xml_add_child
 #' @export
 clarity_get <- function(url){
     ## tests if url is a valid clarity site
@@ -41,6 +41,7 @@ clarity_get <- function(url){
     zd <- curl::curl_fetch_disk(xml_loc, tempfile(fileext = ".zip"))$content
 
     xf <- xml2::read_xml(zd)
+    xf <- xml2::xml_add_child(xf, "DownloadTime", as.character(Sys.time()))
 
     class(xf) <- c("clarity_xml", class(xf))
     xf
