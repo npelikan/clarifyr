@@ -1,7 +1,16 @@
+#' Return entire clarity object as tibble.
+#'
+#' Converts the lowest geographic level (typically Precinct) of a \code{clarity_xml} object into a long, 'tidy' dataframe.
+#'
+#' @param x an object of class \code{clarity_xml}
+#'
+#' @return a tibble, with the columns precinct, votes, votetype, candidate, race
+#'
 #' @importFrom xml2 xml_children xml_find_all xml_attr xml_parents
 #' @importFrom purrr map_dfr
 #' @importFrom tibble tibble
 #' @importFrom dplyr mutate
+#' @export
 as.data.frame.clarity_xml <- function(x){
 
     co <- xml2::xml_find_all(x, "Contest")
@@ -18,9 +27,9 @@ as.data.frame.clarity_xml <- function(x){
                     votetype = xml2::xml_attr(a, "name")
                 )
             })
-            dplyr::mutate(vd, candidate = xml2::xml_attr(z, "text"))
+            vd$candidate <- xml2::xml_attr(z, "text")
         })
-        dplyr::mutate(cd, race = xml2::xml_attr(y, "text"))
+        cd$race <- xml2::xml_attr(y, "text")
     })
 
     fd

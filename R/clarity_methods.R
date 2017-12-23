@@ -34,7 +34,7 @@ print.clarity_xml <- function(x){
     ncontests <- length(contests)
 
     cat_line("<Clarity XML Report downloaded ", dltime, ">")
-    cat_line(name, ", ", date, ", ", region)
+    cat_line("Election: ", name, ", ", date, ", ", region)
     cat_line("Report Time: ", time)
     cat_line("Voters: ", voters)
     cat_line("Ballots: ", ballots)

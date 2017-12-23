@@ -41,7 +41,8 @@ clarity_get <- function(url){
     zd <- curl::curl_fetch_disk(xml_loc, tempfile(fileext = ".zip"))$content
 
     xf <- xml2::read_xml(zd)
-    xf <- xml2::xml_add_child(xf, "DownloadTime", as.character(Sys.time()))
+    ## adds in a report download time object for later use
+    xml2::xml_add_child(xf, "DownloadTime", as.character(Sys.time()))
 
     class(xf) <- c("clarity_xml", class(xf))
     xf
