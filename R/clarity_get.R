@@ -19,7 +19,7 @@ url_split <- function(x){
 #' @importFrom stringr str_detect str_split
 #' @importFrom httr GET content
 #' @importFrom curl curl_fetch_disk
-#' @importFrom xml read_xml xml_add_child
+#' @importFrom xml2 read_xml xml_add_child
 #' @export
 clarity_get <- function(url){
     ## tests if url is a valid clarity site
