@@ -17,7 +17,7 @@ summary.clarity_xml <- function(x){
          contests = contests)
 }
 
-#' @importFrom xml2 xml_find_all xml_content
+#' @importFrom xml2 xml_find_all xml_contents
 get_xml_contents <- function(x, xpath) as.character(xml2::xml_contents(xml2::xml_find_all(x = x, xpath = xpath)))
 
 #' @importFrom xml2 xml_find_all xml_contents xml_attr
