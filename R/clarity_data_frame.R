@@ -28,8 +28,10 @@ as.data.frame.clarity_xml <- function(x){
                 )
             })
             vd$candidate <- xml2::xml_attr(z, "text")
+            vd
         })
         cd$race <- xml2::xml_attr(y, "text")
+        cd
     })
 
     fd
