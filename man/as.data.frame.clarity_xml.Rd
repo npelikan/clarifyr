@@ -4,13 +4,15 @@
 \alias{as.data.frame.clarity_xml}
 \title{Return entire clarity object as tibble.}
 \usage{
-\method{as.data.frame}{clarity_xml}(x)
+\method{as.data.frame}{clarity_xml}(x, ...)
 }
 \arguments{
 \item{x}{an object of class \code{clarity_xml}}
+
+\item{...}{arguments passed to as.data.frame}
 }
 \value{
-a tibble, with the columns precinct, votes, votetype, candidate, race
+a data frame, with the columns precinct, votes, votetype, candidate, race
 }
 \description{
 Converts the lowest geographic level (typically Precinct) of a \code{clarity_xml} object into a long, 'tidy' dataframe.

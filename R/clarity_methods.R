@@ -5,11 +5,11 @@ cat_line <- function(...) {
 
 #' @importFrom xml2 xml_find_all xml_contents xml_attr
 #' @export
-summary.clarity_xml <- function(x){
-    time <- as.character(xml2::xml_contents((xml2::xml_find_all(x = x, xpath = "Timestamp"))))
-    voters <- as.numeric(xml2::xml_attr(xml2::xml_find_all(x = x, xpath = "VoterTurnout"), attr = "totalVoters"))
-    ballots <- as.numeric(xml2::xml_attr(xml2::xml_find_all(x = x, xpath = "VoterTurnout"), attr = "ballotsCast"))
-    contests <- xml2::xml_attr(xml2::xml_find_all(x = x, xpath = "Contest"), attr = "text")
+summary.clarity_xml <- function(object, ...){
+    time <- as.character(xml2::xml_contents((xml2::xml_find_all(x = object, xpath = "Timestamp"))))
+    voters <- as.numeric(xml2::xml_attr(xml2::xml_find_all(x = object, xpath = "VoterTurnout"), attr = "totalVoters"))
+    ballots <- as.numeric(xml2::xml_attr(xml2::xml_find_all(x = object, xpath = "VoterTurnout"), attr = "ballotsCast"))
+    contests <- xml2::xml_attr(xml2::xml_find_all(x = object, xpath = "Contest"), attr = "text")
 
     list(time = time,
          voters = voters,
@@ -22,7 +22,7 @@ get_xml_contents <- function(x, xpath) as.character(xml2::xml_contents(xml2::xml
 
 #' @importFrom xml2 xml_find_all xml_contents xml_attr
 #' @export
-print.clarity_xml <- function(x){
+print.clarity_xml <- function(x, ...){
     name <- get_xml_contents(x = x, xpath = "ElectionName")
     date <- get_xml_contents(x = x, xpath = "ElectionDate")
     region <- get_xml_contents(x = x, xpath = "Region")
