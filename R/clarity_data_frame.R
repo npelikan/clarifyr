@@ -26,10 +26,10 @@ as.data.frame.clarity_xml <- function(x, ...){
                     precinct = xml2::xml_attr(pt, "name"),
                     votes = xml2::xml_attr(pt, "votes"),
                     votetype = xml2::xml_attr(a, "name"),
-                    party = xml2::xml_attr(a, "party")
                 )
             })
             vd$candidate <- xml2::xml_attr(z, "text")
+            vd$party <- xml2::xml_attr(z, "party")
             vd
         })
         cd$race <- xml2::xml_attr(y, "text")
