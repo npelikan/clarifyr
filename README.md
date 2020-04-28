@@ -1,6 +1,4 @@
-[![Travis build status](https://travis-ci.org/npelikan/clarifyr.svg?branch=master)](https://travis-ci.org/npelikan/clarifyr)
-[![Coverage status](https://codecov.io/gh/npelikan/clarifyr/branch/master/graph/badge.svg)](https://codecov.io/github/npelikan/clarifyr?branch=master)
-[![Build status](https://ci.appveyor.com/api/projects/status/gfs95i6or81bd4rs/branch/master?svg=true)](https://ci.appveyor.com/project/npelikan/clarifyr/branch/master)
+![R-CMD-check](https://github.com/npelikan/clarifyr/workflows/R-CMD-check/badge.svg?branch=master)
 
 
 # clarifyr
