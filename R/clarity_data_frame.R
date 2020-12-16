@@ -9,11 +9,10 @@
 #' @return a data frame, with the columns precinct, votes, votetype,
 #' candidate, race
 #'
-#' @importFrom xml2 xml_children xml_find_all xml_attr xml_parents
+#' @importFrom xml2 xml_children xml_find_all xml_attr xml_parents xml_text
 #' @importFrom purrr map_dfr
 #' @importFrom tibble tibble
-#' @importFrom dplyr mutate
-#' @importFrom rvest html_text
+#' @importFrom dplyr mutate left_join
 #' @export
 as.data.frame.clarity_xml <- function(x, ...) {
 
@@ -41,14 +40,18 @@ as.data.frame.clarity_xml <- function(x, ...) {
 
     # Extract ballots cast from VoterTurnout by precinct
     ballots_cast <- data.frame(
-        precinct = xml_find_all(x, "VoterTurnout//Precincts/Precinct") %>%
-            xml_attr("name"),
-        ballots_cast = xml_find_all(x, "VoterTurnout//Precincts/Precinct") %>%
-            xml_attr("ballotsCast") %>% as.numeric,
+        precinct = xml_attr(
+            xml_find_all(x, "VoterTurnout//Precincts/Precinct"), "name"),
+        ballots_cast =  as.numeric(
+            xml_attr(
+                xml_find_all(x, "VoterTurnout//Precincts/Precinct"), "ballotsCast")
+        ),
         stringsAsFactors = F
     )
 
     fd <- dplyr::left_join(fd, ballots_cast, by = "precinct")
+    # Timestamp as text (format could vary by state)
     fd$last_updated <- ts
+
     as.data.frame(fd, ...)
 }

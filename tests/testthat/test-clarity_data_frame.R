@@ -1,7 +1,14 @@
 context("test-clarity_data_frame.R")
 
 test_that("GA Format works", {
-  expect_is(as.data.frame(clarity_get("http://results.enr.clarityelections.com/GA/Appling/63993/en/reports.html")), "data.frame")
+    r <- as.data.frame(
+        clarity_get("http://results.enr.clarityelections.com/GA/Appling/63993/en/reports.html")
+    )
+    expect_is(r, "data.frame")
+    expect_named(r, c("precinct", "votes", "votetype", "candidate",
+                      "party", "race", "ballots_cast", "last_updated"))
+    expect_is(r$ballots_cast, "numeric")
+    expect_is(r$last_updated, "character")
 })
 
 test_that("NJ/Old format works", {

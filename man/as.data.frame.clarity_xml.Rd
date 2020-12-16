@@ -12,8 +12,10 @@
 \item{...}{arguments passed to as.data.frame}
 }
 \value{
-a data frame, with the columns precinct, votes, votetype, candidate, race
+a data frame, with the columns precinct, votes, votetype,
+candidate, race
 }
 \description{
-Converts the lowest geographic level (typically Precinct) of a \code{clarity_xml} object into a long, 'tidy' dataframe.
+Converts the lowest geographic level (typically Precinct) of a
+\code{clarity_xml} object into a long, 'tidy' dataframe.
 }
