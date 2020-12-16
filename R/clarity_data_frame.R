@@ -13,11 +13,12 @@
 #' @importFrom purrr map_dfr
 #' @importFrom tibble tibble
 #' @importFrom dplyr mutate
+#' @importFrom rvest html_text
 #' @export
 as.data.frame.clarity_xml <- function(x, ...) {
 
     co <- xml2::xml_find_all(x, "Contest")
-
+    ts <- xml2::xml_text(xml2::xml_find_all(x, "Timestamp"))
     fd <- purrr::map_dfr(co, function(y) {
         ch <- xml2::xml_find_all(y, "Choice")
         cd <- purrr::map_dfr(ch, function(z) {
@@ -27,7 +28,7 @@ as.data.frame.clarity_xml <- function(x, ...) {
                 tibble::tibble(
                     precinct = xml2::xml_attr(pt, "name"),
                     votes = xml2::xml_attr(pt, "votes"),
-                    votetype = xml2::xml_attr(a, "name"),
+                    votetype = xml2::xml_attr(a, "name")
                 )
             })
             vd$candidate <- xml2::xml_attr(z, "text")
@@ -38,5 +39,16 @@ as.data.frame.clarity_xml <- function(x, ...) {
         cd
     })
 
+    # Extract ballots cast from VoterTurnout by precinct
+    ballots_cast <- data.frame(
+        precinct = xml_find_all(x, "VoterTurnout//Precincts/Precinct") %>%
+            xml_attr("name"),
+        ballots_cast = xml_find_all(x, "VoterTurnout//Precincts/Precinct") %>%
+            xml_attr("ballotsCast") %>% as.numeric,
+        stringsAsFactors = F
+    )
+
+    fd <- dplyr::left_join(fd, ballots_cast, by = "precinct")
+    fd$last_updated <- ts
     as.data.frame(fd, ...)
 }
