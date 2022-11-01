@@ -18,8 +18,8 @@ url_split <- function(x) {
 #' @return an object of class `clarity_xml` for manipulation/extraction
 #'
 #' @importFrom stringr str_detect str_split
-#' @importFrom httr GET content
-#' @importFrom curl curl_fetch_disk
+#' @importFrom httr GET content add_headers
+#' @importFrom curl curl_fetch_disk new_handle handle_setheaders
 #' @importFrom xml2 read_xml xml_add_child
 #' @export
 clarity_get <- function(url) {
@@ -39,16 +39,26 @@ clarity_get <- function(url) {
     versionid <- httr::content(
         httr::GET(
             paste("http://results.enr.clarityelections.com",
-                  st, juris, electionid, "current_ver.txt", sep = "/")
+                  st, juris, electionid, "current_ver.txt", sep = "/"),
+            httr::add_headers(
+                "User-Agent" = "Mozilla/5.0 (X11; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0"
             )
         )
+    )
 
     xml_loc <- paste("http://results.enr.clarityelections.com",
                      st, juris, electionid, versionid, "reports",
                      "detailxml.zip", sep = "/")
 
+    h <- curl::new_handle()
+
+    curl::handle_setheaders(
+        h,
+        "User-Agent" = "Mozilla/5.0 (X11; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0"
+    )
+
     # put checks for invalid transfer below
-    zd <- curl::curl_fetch_disk(xml_loc, tempfile(fileext = ".zip"))$content
+    zd <- curl::curl_fetch_disk(xml_loc, tempfile(fileext = ".zip"), handle = h)$content
 
     xf <- xml2::read_xml(zd)
     # adds in a report download time object for later use
