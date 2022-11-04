@@ -50,6 +50,8 @@ clarity_get <- function(url) {
                      st, juris, electionid, versionid, "reports",
                      "detailxml.zip", sep = "/")
 
+    print(xml_loc)
+
     h <- curl::new_handle()
 
     curl::handle_setheaders(
